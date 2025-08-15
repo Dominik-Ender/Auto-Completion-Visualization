@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .node circle {
+            fill: #69b3a2;
+            stroke: #333;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font: 14px sans-serif;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <input id="msg" placeholder="Nachricht eingeben">
+    <button onclick="sendMessage()">Senden</button>
+
+
+    <pre id="log"></pre>
+    <svg width="1000" height="800"></svg>
+
+    <script>
+        // let ws = new WebSocket("ws://localhost:7128/ws");
+        let ws = new WebSocket("https://localhost:7128/ws");
+        let svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height");
+
+        let g = svg.append("g").attr("transform", "translate(50,50)");
+
+        let treeLayout = d3.tree().size([height - 100, width - 200]);
+
+        document.getElementById("msg").addEventListener("input", () => {
+            let msg = document.getElementById("msg").value;
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(msg);
+                // document.getElementById("log").textContent += "Client: " + msg + "\n";
+            }
+        });
+
+        ws.onmessage = event => {
+            let data = JSON.parse(event.data);
+            renderTrie(data);
+        };
+
+        function renderTrie(data) {
+            g.selectAll("*").remove(); // vorherigen Baum löschen
+
+            let root = d3.hierarchy(data, d => d.children);
+            treeLayout(root);
+
+            // Links
+            g.selectAll(".link")
+                .data(root.links())
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", d3.linkHorizontal()
+                    .x(d => d.y)
+                    .y(d => d.x)
+                );
+
+            // Nodes
+            let node = g.selectAll(".node")
+                .data(root.descendants())
+                .enter().append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.y},${d.x})`);
+
+            node.append("circle")
+                .attr("r", 10);
+
+            node.append("text")
+                .attr("dy", 3)
+                .attr("x", d => d.children ? -12 : 12)
+                .style("text-anchor", d => d.children ? "end" : "start")
+                .text(d => d.data.letter ? d.data.letter : "root");
+        }
+
+        //ws.onmessage = event => {
+        //    // document.getElementById("log").textContent += "Server: " + event.data + "\n";
+
+        //    try {
+        //        let suggestions = JSON.parse(event.data);
+        //        let ul = document.getElementById("list");
+        //        ul.innerHTML = "";
+
+        //        suggestions.forEach(word => {
+        //            let li = document.createElement("li");
+        //            li.textContent = word;
+        //            ul.appendChild(li);
+        //        });
+        //    } catch (e) {
+        //        console.error("Ungültiges JSON: ", event.data);
+        //    }
+        //};
+
+        function sendMessage() {
+            let msg = document.getElementById("msg").value;
+            ws.send(msg);
+            // document.getElementById("log").textContent += "Client: " + msg + "\n";
+        }
+
+
+    </script>
+</body>
+</html>
