@@ -1,6 +1,0 @@
-@Autocompletion_HostAddress = http://localhost:5250
-
-GET {{Autocompletion_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
