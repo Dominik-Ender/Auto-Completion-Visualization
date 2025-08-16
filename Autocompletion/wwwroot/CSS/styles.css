@@ -1,0 +1,80 @@
+﻿.node circle {
+    fill: #69b3a2;
+    stroke: #333;
+    stroke-width: 2px;
+}
+
+.node text {
+    font: 14px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}
+
+#suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 300px;
+    text-align: left;
+    font: 14px sans-serif;
+}
+
+#suggestions-wrapper {
+    width: 300px;
+    margin: 0 auto 30px auto;
+    min-height: 0px;
+    position: relative;
+}
+
+#msg {
+    width: 300px;
+    font: 14px sans-serif;
+    text-align: left;
+}
+
+#suggestions li {
+    padding: 5px 10px;
+}
+
+    #suggestions li:hover {
+        background-color: #f0f0f0;
+        font: 14px sans-serif;
+    }
+
+#msg {
+    width: 300px;
+    font: 14px sans-serif;
+}
+
+#h1 {
+    font: 26px sans-serif;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+    height: 200px;
+}
+
+#canvas {
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    display: block;
+    margin: 150px auto 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}

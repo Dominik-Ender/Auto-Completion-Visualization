@@ -1,8 +1,7 @@
-﻿using Autocompletion;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 
-namespace Autocompletion {
+namespace Autocompletion.DataStructures {
     public class Trie {
         public TrieNode Root { get; }
         public int size { get; set; }
@@ -28,7 +27,7 @@ namespace Autocompletion {
             Delete(Root, word, 0);
         }
 
-        private Boolean Delete(TrieNode current, string word, int index) {
+        private bool Delete(TrieNode current, string word, int index) {
             if (index == word.Length) {
                 if (!current.IsEndOfWord) {
                     return false;
@@ -145,7 +144,7 @@ namespace Autocompletion {
             }
         }
 
-        public Object ToJson(TrieNode node, char? letter = null) {
+        public object ToJson(TrieNode node, char? letter = null) {
             return new {
                 letter = letter?.ToString(),
                 end = node.IsEndOfWord,

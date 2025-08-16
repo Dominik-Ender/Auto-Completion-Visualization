@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Autocompletion {
+namespace Autocompletion.DataStructures {
 
     public class TrieNode {
 

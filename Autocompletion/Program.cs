@@ -1,12 +1,10 @@
-using Autocompletion;
+using Autocompletion.DataStructures;
+using Autocompletion.WordImport;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -34,24 +32,13 @@ app.Map("/ws", async context => {
 
             List<string> ans = trie.AutoComplete(receivedMessage);
 
-            Console.WriteLine(string.Join(", ", ans));
-
-            //for(int i = 0; i < ans.Count; i++) {
-            //    Console.Write(ans[i] + ", ");
-            //}
-
-            // Console.WriteLine("TRIE AUTOCOMPLETE: " + string.Join(", ", trie.AutoComplete(receivedMessage)));
-            // Console.WriteLine("trie.Search: " + trie.Search(receivedMessage));
-
             var node = trie.GetNodeForPrefix(receivedMessage);
 
             if (node != null) {
-
                 var json = System.Text.Json.JsonSerializer.Serialize(ans);
-                // var responseMessage = $"Server sagt: {receivedMessage.ToUpper()}";
                 var responseBytes = Encoding.UTF8.GetBytes(json);
-                await webSocket.SendAsync(new ArraySegment<byte>(responseBytes), result.MessageType, true, CancellationToken.None);
 
+                await webSocket.SendAsync(new ArraySegment<byte>(responseBytes), result.MessageType, true, CancellationToken.None);
             }
             result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
@@ -61,17 +48,5 @@ app.Map("/ws", async context => {
         context.Response.StatusCode = StatusCodes.Status400BadRequest;
     }
 });
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.MapOpenApi();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
 
 app.Run();

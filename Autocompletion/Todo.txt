@@ -1,2 +1,0 @@
-Trie wird erstellt
-Trie wird gesendet aber es wird nur Root Node angezeigt und es wird anscheinend auch nicht neu geladen

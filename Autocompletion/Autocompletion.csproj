@@ -11,7 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\CSS\styles.css" />
     <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\JavaScript\script.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
