@@ -42,10 +42,10 @@
     padding: 5px 10px;
 }
 
-    #suggestions li:hover {
-        background-color: #f0f0f0;
-        font: 14px sans-serif;
-    }
+#suggestions li:hover {
+    background-color: #f0f0f0;
+    font: 14px sans-serif;
+}
 
 #msg {
     width: 300px;
