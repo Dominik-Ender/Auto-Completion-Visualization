@@ -11,3 +11,5 @@ Implemented a trie data structure with a list of over 370.000 words.
 
 <img width="1514" height="609" alt="image" src="https://github.com/user-attachments/assets/e0286699-4ab9-45cd-9599-44cf8b41dfe9" />
 
+
+  
